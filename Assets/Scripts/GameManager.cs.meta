@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: a16d71eca7573b74b9afdb2f109a4603
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - PlayerCard: {fileID: 6698809748210893588, guid: c61ebb3b1a3c0674ab15fcc3d49ae24b, type: 3}
+  - OpponentCard: {fileID: 6698809748210893588, guid: b907e09acc60b5747b082a580a0bd609, type: 3}
+  - OpponentCardBack: {fileID: 6698809748210893588, guid: 13a32942fd65bd346a98da7acef4803c, type: 3}
+  - PlayerArea: {fileID: 3391112704884626012, guid: 128022809d6fc3b47a35f29f439ffc58, type: 3}
+  - OpponentArea: {fileID: 4215436353824140469, guid: 2fa009ce24a6c594fa4d658178ebf99e, type: 3}
+  - DropZone: {fileID: 7497734554707285390, guid: cf8584af327be7d4d824d1662033ee77, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
