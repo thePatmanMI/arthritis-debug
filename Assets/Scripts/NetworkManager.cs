@@ -46,8 +46,19 @@ public class NetworkManager : MonoBehaviour {
 		_room = await _client.JoinOrCreate<ArthritisRoomState>("game");
 		var callbacks = Colyseus.Schema.Callbacks.Get(_room);
 
-		callbacks.OnChange(state => state.discardPile, (index, card) => {
+		callbacks.OnAdd(state => state.discardPile, (index, card) => {
 			gameManager.GetComponent<GameManager>().DrawDiscard();
+		});
+
+		int counter = 0;
+		callbacks.OnAdd(state => state.players, (id, player) => {
+			callbacks.OnAdd(player, player => player.cards, (index, card) => {
+				counter++;
+				Debug.Log("onAdd called " + counter + " times.");
+				if (player.playerId == _room.SessionId) {
+					gameManager.GetComponent<GameManager>().Draw(player.playerId, card);
+				}
+			});
 		});
 
 		// FIXME: find replacement for this 0.15 compliant code
