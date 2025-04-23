@@ -33,7 +33,7 @@ export class ArthritisRoom extends Room<ArthritisRoomState> {
 			console.log("Game Room received message from", client.sessionId, ":", message);
 			this.broadcast("server-message", `(${client.sessionId} ${message}`);
 		});
-		
+
 		//when a message is received of type "game-message," broadcast it with the type "game-message" to all clients except for the one that sent it
 		this.onMessage("game-message", (client, message) => {
 			console.log("game-message received from", client.sessionId, ":", message);
@@ -43,13 +43,14 @@ export class ArthritisRoom extends Room<ArthritisRoomState> {
 					player.cards.clear();
 				});
 				this.addDeck(2);
-				this.shuffleDeck();
+				this.state.deck.shuffle();
 				this.dealCards();
 			} else if (message == "drawFromDeck") {
 				let card = this.state.deck.shift();
 				this.state.players.get(client.sessionId).cards.push(card);
 				// this.state.discardPile.push(card);
-				this.state.discardPile.splice(0, 0, card);
+				// this.state.discardPile.splice(0, 0, card);
+				this.state.discardPile.unshift(card);
 			} else if (message == "drawFromDiscard") {
 				// FIXME: add out of turn logic here for the card swiping
 				let card = this.state.discardPile.shift();
@@ -58,7 +59,7 @@ export class ArthritisRoom extends Room<ArthritisRoomState> {
 				this.broadcast("game-message", message + " ", { except: client });
 			} else if (message == "dropOnDiscard") {
 				// FIXME: add logic here to add to the discard pile, maybe it just gets automatically added by sync and we just update the player here?
-				
+
 			}
 		});
 
@@ -96,13 +97,4 @@ export class ArthritisRoom extends Room<ArthritisRoomState> {
 		this.state.discardPile.push(this.state.deck.shift());
 	}
 
-	shuffleDeck(count: number = 1000) {
-		for (let i = 0; i < count; i++) {
-			let index = Math.round(Math.random() * (this.state.deck.length - 1));
-			let card = this.state.deck.at(index);
-			this.state.deck.splice(index, 1);
-			this.state.deck.push(card);
-		}
-		console.log("shuffle complete");
-	}
 }
